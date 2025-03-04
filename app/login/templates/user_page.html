@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+
+{% block title %}Профиль пользователя{% endblock %}
+
+{% block content %}
+    <h2>Добро пожаловать, {{ user.first_name }} {{ user.last_name }}{% if user.patronymic %} {{ user.patronymic }}{% endif %}!</h2>
+
+    {% if user.role %}
+        {% if user.role.rolename == 'Администратор' %}
+            <div class="alert alert-info">
+                <h3>Администратор</h3>
+                <p>Вы в роли администратора. У вас есть доступ ко всем функциям системы.</p>
+                
+                <!-- Кнопки для администратора -->
+                <a href="{% url 'admin_dashboard' %}" class="btn btn-primary">Пользователи</a>
+                <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#featureModal">Номера</a>
+                <a href="#" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#featureModal">Бронирование</a>
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#featureModal">Постояльцы</a>
+            </div>
+        {% elif user.role.rolename == 'Пользователь' %}
+            <div class="alert alert-success">
+                <h3>Пользователь</h3>
+                <p>Вы обычный пользователь. Здесь ваш личный профиль.</p>
+
+                <!-- Кнопки для пользователя -->
+                <a href="#" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#featureModal">Постояльцы</a>
+                <a href="#" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#featureModal">Бронирование</a>
+            </div>
+        {% else %}
+            <div class="alert alert-warning">
+                <h3>Роль не определена</h3>
+                <p>Ваша роль не определена, обратитесь к администратору для получения доступа.</p>
+            </div>
+        {% endif %}
+    {% else %}
+        <div class="alert alert-warning">
+            <p>Роль не назначена. Пожалуйста, обратитесь к администратору.</p>
+        </div>
+    {% endif %}
+
+    <!-- Модальное окно для сообщений о разработке -->
+    <div class="modal fade" id="featureModal" tabindex="-1" aria-labelledby="featureModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="featureModalLabel">Функция в разработке</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Эта функция еще в разработке. Пожалуйста, попробуйте позже.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

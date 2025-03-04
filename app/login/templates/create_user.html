@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Создать нового пользователя</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Создать</button>
+</form>
+<a href="{% url 'admin_dashboard' %}">Назад к списку пользователей</a>
+{% endblock %}
