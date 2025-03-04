@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required, user_passes_test
 from . import forms
 from .models import User  # Импортируем твою пользовательскую модель
 
+def non(test):
+    return test
+
 def is_admin(user):
     return user.is_superuser
 
